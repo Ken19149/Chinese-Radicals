@@ -1,8 +1,9 @@
 const fs = require("fs");
-var txt = fs.readFile("set.txt", "utf-8", (err,data) => {
-    if (err) {
-        console.error(err);
-        return;
-      }
-      console.log(data);
+
+fs.readFile("set.txt", "utf-8", (err,data) => {
+    if (err) throw err;
+    data = data.replace(/\n/g, "");
+    console.log(data);
+    console.log(typeof data);
 });
+
