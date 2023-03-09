@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "hanzi": "^2.1.5"
+    "hanzi": "^2.1.5",
+    "opencc-js": "^1.0.5"
   }
 }
