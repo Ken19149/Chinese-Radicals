@@ -4,26 +4,16 @@ const fs = require("fs");
 fs.readFile("kangxi radicals.txt", "utf-8", (err,data) => {
     if (err) throw err;
     data = data.replace(/\n/g, "").replace(/" "/g, "");     //remove new lines and spaces
-    data = "abab"     //for testing
-    const list = [];
-    const str = "";
+    let str = "";
 
-    //test
-    list.push(data[0]);
     for (let i in data) {
-        for (let j in list) {
-            if (data[i]==list[j]) {
-                console.log("skip " + data[i]);
-                continue;
-            } else if (data[i] != list[j] && ((list.length - 1) == j)) {
-                list.push(data[i]);
-                console.log("added " + data[i]);
-            }
+        if (data != "") {
+            str = str.concat(data[0]);
+            data = data.split(data[0]).join("");    //replace first character with ""; remove 1st character
+        } else if (data == "") {
+            console.log("empty");
+            break;
         }
-    }
-    console.log(list);
-    for (let i in list) {
-        console.log(list[i]);
     }
     console.log(str);
 });
