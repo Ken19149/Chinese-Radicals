@@ -13,16 +13,7 @@ for (let i in hanzi.lib_radicals_with_meaning) {
     radicals_lib_w_meaning.push(i);
 }
 
-/*
-fs.readFile("kangxi radicals.txt", "utf-8", (err,data) => {
-    if (err) throw err;
-    for (var i in data) {
-        radicals_kangxi.push(data[i]);
-        console.log(data[i]);
-    }
-    console.log(radicals_kangxi);
-});
-*/
-
-var text = fs.readFileSync("kangxi radicals.txt", "utf8");
-console.log(text);
+var str_kangxi_radicals = fs.readFileSync("kangxi radicals.txt", "utf8");
+for (let i in str_kangxi_radicals) {
+    radicals_kangxi.push(str_kangxi_radicals[i]);
+}

@@ -6,9 +6,7 @@ const converter = OpenCC.Converter({ from: 'cn', to: 'tw' });   //change simplif
 
 const fs = require("fs");   //filesystem to open file
 
-fs.readFile("set-simplified.txt", "utf-8", (err,data) => {
-    if (err) throw err;
-    var traditional = converter(data);         //convert simplified -> traditional
-    var decomposition = hanzi.decomposeMany(traditional);      //breakdown characters
-    console.log(decomposition);
-});
+var set_simplified = fs.readFileSync("set-simplified.txt", "utf8")
+var traditional = converter(set_simplified);         //convert simplified -> traditional
+var decomposition = hanzi.decomposeMany(traditional);      //breakdown characters
+console.log(decomposition);
