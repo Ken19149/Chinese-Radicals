@@ -19,5 +19,27 @@ for (let i in str_kangxi_radicals) {
     radicals_kangxi.push(str_kangxi_radicals[i]);
 }
 
-radicals_combine_lib = radicals_lib.concat(radicals_lib_w_meaning);
-console.log(radicals_combine_lib);
+//remove duplicates from combined radicals in library
+
+var radicals_combine_lib_total = radicals_lib.concat(radicals_lib_w_meaning);
+
+for (let i in radicals_combine_lib_total) {
+    if (radicals_combine_lib_total != []) {
+        radicals_combine_lib = radicals_combine_lib.concat(radicals_combine_lib_total[0]);
+        for (let j in radicals_combine_lib_total) {
+            if (radicals_combine_lib_total[j] == radicals_combine_lib_total[i] && j != 0) {
+                console.log("remove dupe: " + radicals_combine_lib_total[i], radicals_combine_lib_total[j], "at location " + j,i);
+                radicals_combine_lib_total.splice(j, 1);
+            }
+        }
+        radicals_combine_lib_total.splice(0, 1);    // remove the 1st element in array
+    } else if (radicals_combine_lib_total == []) {
+        break;
+    }
+}
+
+console.log("kangxi radicals: " + radicals_kangxi.length);
+console.log("radicals lib: " + radicals_lib.length);
+console.log("radicals lib with meaning:" + radicals_lib_w_meaning.length);
+console.log("combine total: " + radicals_combine_lib_total.length);
+console.log("combine remove dupe: " + radicals_combine_lib.length);
