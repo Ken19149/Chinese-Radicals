@@ -26,13 +26,7 @@ var radicals_combine_lib_total = radicals_lib.concat(radicals_lib_w_meaning);
 for (let i in radicals_combine_lib_total) {
     if (radicals_combine_lib_total != []) {
         radicals_combine_lib = radicals_combine_lib.concat(radicals_combine_lib_total[0]);
-        for (let j in radicals_combine_lib_total) {
-            if (radicals_combine_lib_total[j] == radicals_combine_lib_total[i] && j != 0) {
-                console.log("remove dupe: " + radicals_combine_lib_total[i], radicals_combine_lib_total[j], "at location " + j,i);
-                radicals_combine_lib_total.splice(j, 1);
-            }
-        }
-        radicals_combine_lib_total.splice(0, 1);    // remove the 1st element in array
+        
     } else if (radicals_combine_lib_total == []) {
         break;
     }
