@@ -8,7 +8,6 @@ const fs = require("fs");   //filesystem to open file
 
 var set_simplified = fs.readFileSync("set-simplified.txt", "utf8")
 var traditional = converter(set_simplified);         //convert simplified -> traditional
-var decomposition = hanzi.decomposeMany(traditional);      //breakdown characters
 
 //create sets of 1k - 5k characters
 interval_length = 1000
@@ -42,5 +41,6 @@ function setData(sets){
     return full_str;
 }
 
-console.log(sets);
-console.log(setData(sets));
+for (i in sets[0]) {
+    console.log(hanzi.decompose(sets[0][i]));
+}
