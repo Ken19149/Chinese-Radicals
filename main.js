@@ -41,6 +41,14 @@ function setData(sets){
     return full_str;
 }
 
+//testing decomposing 1k set
+
+sets_decomposition_0 = [[],[],[]]
+
 for (i in sets[0]) {
-    console.log(hanzi.decompose(sets[0][i]));
+    let decom = hanzi.decompose(sets[0][i]);
+    sets_decomposition_0[0] = sets_decomposition_0[0].concat(decom["components1"]);
+    sets_decomposition_0[1] = sets_decomposition_0[1].concat(decom["components2"]);
+    sets_decomposition_0[2] = sets_decomposition_0[2].concat(decom["components3"]);
 }
+console.log(sets_decomposition_0);
