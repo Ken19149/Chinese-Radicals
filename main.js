@@ -41,19 +41,36 @@ function setData(sets){
     return full_str;
 }
 
-//testing decomposing 1k set
-
 sets_decomposition = [];
 
 for (let i = 0; i < sets_count; i++) {
     sets_decomposition = sets_decomposition.concat([[[],[],[]]]);
 }
-/*
+
+
 for (i in sets[0]) {
     let decom = hanzi.decompose(sets[0][i]);
-    sets_decomposition[0] = sets_decomposition[0].concat(decom["components1"]);
-    sets_decomposition[1] = sets_decomposition[1].concat(decom["components2"]);
-    sets_decomposition[2] = sets_decomposition[2].concat(decom["components3"]);
+    sets_decomposition[0][0] = sets_decomposition[0][0].concat(decom["components1"]);
+    sets_decomposition[0][1] = sets_decomposition[0][1].concat(decom["components2"]);
+    sets_decomposition[0][2] = sets_decomposition[0][2].concat(decom["components3"]);
 }
-*/
-console.log(sets_decomposition);
+
+//create remove dupe in array function      --reuse code from common radicals.js
+
+function removeDupe(array) {
+    let str_array = "";
+    let str_array_remove_dupe = "";
+    for (let i in array) {
+        str_array = str_array.concat(array[i]);
+    }
+    
+    for (let i in str_array) {
+        if (str_array != "") {
+            str_array_remove_dupe = str_array_remove_dupe.concat(str_array[0]);
+            str_array = str_array.split(str_array[0]).join("");    //replace first character with ""; remove 1st character
+        } else if (str_array == "") {
+            break;
+        }
+    }
+    return str_array_remove_dupe;
+}
