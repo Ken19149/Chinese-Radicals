@@ -48,11 +48,16 @@ for (let i = 0; i < sets_count; i++) {
 }
 
 
-for (i in sets[0]) {
-    let decom = hanzi.decompose(sets[0][i]);
-    sets_decomposition[0][0] = sets_decomposition[0][0].concat(decom["components1"]);
-    sets_decomposition[0][1] = sets_decomposition[0][1].concat(decom["components2"]);
-    sets_decomposition[0][2] = sets_decomposition[0][2].concat(decom["components3"]);
+for (i in sets) {
+    for (j in sets[0]) {
+    let decom = hanzi.decompose(sets[i][j]);
+    sets_decomposition[i][0] = sets_decomposition[i][0].concat(decom["components1"]);
+    sets_decomposition[i][1] = sets_decomposition[i][1].concat(decom["components2"]);
+    sets_decomposition[i][2] = sets_decomposition[i][2].concat(decom["components3"]);
+    }
+    sets_decomposition[i][0] = removeDupe(sets_decomposition[i][0]);
+    sets_decomposition[i][1] = removeDupe(sets_decomposition[i][1]);
+    sets_decomposition[i][2] = removeDupe(sets_decomposition[i][2]);
 }
 
 //create remove dupe in array function      --reuse code from common radicals.js
@@ -74,3 +79,5 @@ function removeDupe(array) {
     }
     return str_array_remove_dupe;
 }
+
+console.log(sets_decomposition);
