@@ -5,6 +5,7 @@ hanzi.start();
 const converter = OpenCC.Converter({ from: 'cn', to: 'tw' });   //change simplified to taiwan traditional chinese
 
 const fs = require("fs");   //filesystem to open file
+const { type } = require('os');
 
 var set_simplified = fs.readFileSync("set-simplified.txt", "utf8")
 var traditional = converter(set_simplified);         //convert simplified -> traditional
@@ -47,9 +48,10 @@ for (let i = 0; i < sets_count; i++) {
     sets_decomposition = sets_decomposition.concat([[[],[],[]]]);
 }
 
+//decompose and remove dupes for all characters in the array
 
 for (i in sets) {
-    for (j in sets[0]) {
+    for (j in sets[i]) {
     let decom = hanzi.decompose(sets[i][j]);
     sets_decomposition[i][0] = sets_decomposition[i][0].concat(decom["components1"]);
     sets_decomposition[i][1] = sets_decomposition[i][1].concat(decom["components2"]);
@@ -80,4 +82,11 @@ function removeDupe(array) {
     return str_array_remove_dupe;
 }
 
-console.log(sets_decomposition);
+//print the length of string in each array
+
+for (let i in sets_decomposition) {
+    let n = parseInt(i)+1;
+    console.log((n * interval_length) + ": " + sets_decomposition[i][0].length + " | " + sets_decomposition[i][1].length + " | " + sets_decomposition[i][2].length);
+}
+
+//remove unnecessary characters / filter out
