@@ -30,6 +30,7 @@ function createSets(input_set, sets_count = 5, interval_length = 1000){
     return sets
 }
 
+//return data of the set
 function setData(sets){
     sets_count = sets.length;
     interval_length = sets[0].length;
@@ -52,19 +53,20 @@ for (let i = 0; i < sets_count; i++) {
 
 for (i in sets) {
     for (j in sets[i]) {
-    let decom = hanzi.decompose(sets[i][j]);
-    sets_decomposition[i][0] = sets_decomposition[i][0].concat(decom["components1"]);
-    sets_decomposition[i][1] = sets_decomposition[i][1].concat(decom["components2"]);
-    sets_decomposition[i][2] = sets_decomposition[i][2].concat(decom["components3"]);
+        let decom = hanzi.decompose(sets[i][j]);
+        sets_decomposition[i][0] = sets_decomposition[i][0].concat(decom["components1"]);
+        sets_decomposition[i][1] = sets_decomposition[i][1].concat(decom["components2"]);
+        sets_decomposition[i][2] = sets_decomposition[i][2].concat(decom["components3"]);
     }
-    sets_decomposition[i][0] = removeDupe(sets_decomposition[i][0]);
-    sets_decomposition[i][1] = removeDupe(sets_decomposition[i][1]);
-    sets_decomposition[i][2] = removeDupe(sets_decomposition[i][2]);
+
+    sets_decomposition[i][0] = removeDupe(sets_decomposition[i][0], true, true);
+    sets_decomposition[i][1] = removeDupe(sets_decomposition[i][1], true, true);
+    sets_decomposition[i][2] = removeDupe(sets_decomposition[i][2], true, true);
 }
 
 //create remove dupe in array function      --reuse code from common radicals.js
 
-function removeDupe(array) {
+function removeDupe(array, removeAlphabet = false, removeNumber = false, removeSyntax = false) {
     let str_array = "";
     let str_array_remove_dupe = "";
     for (let i in array) {
@@ -79,14 +81,20 @@ function removeDupe(array) {
             break;
         }
     }
+
+    if (removeAlphabet == true) {
+        str_array_remove_dupe = str_array_remove_dupe.replace(/[A-z]/g, "");
+    }
+    if (removeNumber == true) {
+        str_array_remove_dupe = str_array_remove_dupe.replace(/[0-9]/g, "");
+    }
+
     return str_array_remove_dupe;
 }
 
 //print the length of string in each array
-
+console.log(sets_decomposition);
 for (let i in sets_decomposition) {
     let n = parseInt(i)+1;
     console.log((n * interval_length) + ": " + sets_decomposition[i][0].length + " | " + sets_decomposition[i][1].length + " | " + sets_decomposition[i][2].length);
 }
-
-//remove unnecessary characters / filter out
