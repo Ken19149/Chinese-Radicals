@@ -37,6 +37,16 @@ for (let i in str_radicals_combine_lib_total) {
         break;
     }
 }
+//put "str_radicals_combine_lib_remove_dupe" into array "radicals_combine_lib"
+for (let i in str_radicals_combine_lib_remove_dupe) {
+    radicals_combine_lib = radicals_combine_lib.concat(str_radicals_combine_lib_remove_dupe[i]);
+}
+radicals_combine_lib[397] = radicals_combine_lib[397] + radicals_combine_lib[398];  //the element in this location need 2 length to read; combine the last element
+radicals_combine_lib.splice(398,1);     //remove the last element
+
+//find common radicals between combined_lib_toal and kangxi
+
+
 
 console.log("kangxi radicals: " + radicals_kangxi.length);
 console.log("radicals lib: " + radicals_lib.length);
