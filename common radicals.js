@@ -54,7 +54,15 @@ for (i in radicals_kangxi) {
         }
     }
 }
-
+//find the excluded radicals
+var excluded_radicals = [].concat(radicals_kangxi);
+for (i in radicals_common) {
+    for (j in excluded_radicals) {
+        if (radicals_common[i] == excluded_radicals[j]) {
+            excluded_radicals.splice(excluded_radicals[j], 1);
+        }
+    }
+}
 
 
 console.log("kangxi radicals: " + radicals_kangxi.length);
@@ -63,3 +71,4 @@ console.log("radicals lib with meaning:" + radicals_lib_w_meaning.length);
 console.log("combine total: " + radicals_combine_lib_total.length);
 console.log("combine remove dupe: " + str_radicals_combine_lib_remove_dupe.match(/./gu).length);
 console.log("common: " + radicals_common.length);
+console.log("exclude: " + excluded_radicals)
