@@ -9,6 +9,7 @@ var radicals_lib = hanzi.lib_radicals;
 var radicals_lib_w_meaning = [];
 var radicals_kangxi = [];
 var radicals_combine_lib = [];
+var radicals_common = [];
 
 for (let i in hanzi.lib_radicals_with_meaning) {
     radicals_lib_w_meaning.push(i);
@@ -44,7 +45,15 @@ for (let i in str_radicals_combine_lib_remove_dupe) {
 radicals_combine_lib[397] = radicals_combine_lib[397] + radicals_combine_lib[398];  //the element in this location need 2 length to read; combine the last element
 radicals_combine_lib.splice(398,1);     //remove the last element
 
-//find common radicals between combined_lib_toal and kangxi
+//find common radicals between combined_lib and kangxi
+
+for (i in radicals_kangxi) {
+    for (j in radicals_combine_lib) {
+        if (radicals_kangxi[i] == radicals_combine_lib[j]) {
+            radicals_common = radicals_common.concat(radicals_kangxi[i]);
+        }
+    }
+}
 
 
 
@@ -53,3 +62,4 @@ console.log("radicals lib: " + radicals_lib.length);
 console.log("radicals lib with meaning:" + radicals_lib_w_meaning.length);
 console.log("combine total: " + radicals_combine_lib_total.length);
 console.log("combine remove dupe: " + str_radicals_combine_lib_remove_dupe.match(/./gu).length);
+console.log("common: " + radicals_common.length);
