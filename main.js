@@ -103,3 +103,10 @@ for (let i in sets_decomposition) {
     console.log((n * interval_length) + ": " + sets_decomposition[i][0].length + " | " + sets_decomposition[i][1].length + " | " + sets_decomposition[i][2].length);
 }
 
+// create array for kangxi radicals
+
+var kangxi_file = fs.readFileSync("kangxi radicals match variants.txt", "utf8");
+var radicals = kangxi_file.split("\n");
+for (i in radicals) {
+    radicals[i] = radicals[i].split(" ");
+}
