@@ -92,9 +92,14 @@ function removeDupe(array, removeAlphabet = false, removeNumber = false, removeS
     return str_array_remove_dupe;
 }
 
+
+//show all the components for each sets
+for (let i in sets_decomposition) {
+    console.log(sets_decomposition[i][1]);
+}
 //print the length of string in each array
-console.log(sets_decomposition);
 for (let i in sets_decomposition) {
     let n = parseInt(i)+1;
     console.log((n * interval_length) + ": " + sets_decomposition[i][0].length + " | " + sets_decomposition[i][1].length + " | " + sets_decomposition[i][2].length);
 }
+
