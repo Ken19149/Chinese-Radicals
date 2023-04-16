@@ -92,7 +92,7 @@ function removeDupe(array, removeAlphabet = false, removeNumber = false, removeS
     return str_array_remove_dupe;
 }
 
-
+//----------------------------show data---------------------------
 //show all the components for each sets
 for (let i in sets_decomposition) {
     console.log(sets_decomposition[i][1]);
@@ -103,10 +103,24 @@ for (let i in sets_decomposition) {
     console.log((n * interval_length) + ": " + sets_decomposition[i][0].length + " | " + sets_decomposition[i][1].length + " | " + sets_decomposition[i][2].length);
 }
 
+//---------------------radical stuffs-------------------------------
 // create array for kangxi radicals
 
 var kangxi_file = fs.readFileSync("kangxi radicals match variants.txt", "utf8");
 var radicals = kangxi_file.split("\n");
 for (i in radicals) {
+    radicals[i] = radicals[i].replace(/\r/g, "");
     radicals[i] = radicals[i].split(" ");
 }
+//console.log(radicals);
+
+sets_w_components = [];
+for (let i in sets) {
+    sets_w_components = sets_w_components.concat([[]]);
+    for (let j in sets[i]) {
+        sets_w_components[i] = sets_w_components[i].concat([[[sets[i][j]],[]]]);
+        sets_w_components[i][j][1] = sets_w_components[i][j][1].concat(hanzi.decompose(sets_w_components[i][j][0].toString())["components2"]);
+    }
+}
+console.log(sets_w_components);
+//console.log(sets);
