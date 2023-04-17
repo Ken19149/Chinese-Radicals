@@ -1,4 +1,5 @@
 const OpenCC = require('opencc-js');
+var stroke = require('chinese-stroke');
 var hanzi = require("hanzi");
 hanzi.start();
 
@@ -64,8 +65,10 @@ for (i in sets) {
     sets_decomposition[i][2] = removeDupe(sets_decomposition[i][2], true, true);
 }
 
-//create remove dupe in array function      --reuse code from common radicals.js
+//------------------------------Functions-----------------------------------//
+// modify code from common radicals.js
 
+// return as string
 function removeDupe(array, removeAlphabet = false, removeNumber = false, removeSyntax = false) {
     let str_array = "";
     let str_array_remove_dupe = "";
@@ -90,6 +93,31 @@ function removeDupe(array, removeAlphabet = false, removeNumber = false, removeS
     }
 
     return str_array_remove_dupe;
+}
+
+// find common elements function
+function returnCommon(set1, set2, returnArray=true) {
+    let set_common = [];    //array
+
+    for (i in set1) {
+        for (j in set2) {
+            if (set1[i] == set2[j]) {
+                set_common = set_common.concat(set1[i]);
+            }
+        }
+    }
+
+    set_common = removeDupe(set_common, true, true);    // turned into string
+    array_set_common = [];
+
+    if (returnArray = true) {
+        for (let i in set_common) {
+            array_set_common = array_set_common.concat(set_common[i]);
+        }
+        return array_set_common;        // return as array
+    } else if (returnArray = false) {
+        return set_common;              // return as string
+    }
 }
 
 //----------------------------show data---------------------------
@@ -120,11 +148,12 @@ for (let i in sets) {
     sets_w_components = sets_w_components.concat([[]]);
     for (let j in sets[i]) {
         sets_w_components[i] = sets_w_components[i].concat([[[sets[i][j]],[]]]);
-        sets_w_components[i][j][1] = sets_w_components[i][j][1].concat(hanzi.decompose(sets_w_components[i][j][0].toString())["components2"]);
+        sets_w_components[i][j][1] = sets_w_components[i][j][1].concat(hanzi.decompose(sets_w_components[i][j][0].toString())["components2"]);  // add components
+        sets_w_components[i][j][1] = returnCommon(kangxi_file, sets_w_components[i][j][1], true);
+        sets_w_components[i][j][0] = sets_w_components[i][j][0].concat(stroke.get(sets_w_components[i][j][0]));     // add stroke counts
     }
 }
 
 console.log(require('util').inspect(sets_w_components, false, null, true));
 //console.dir(sets_w_components, {'maxArrayLength': 10})
 //console.log(sets_w_components);
-
