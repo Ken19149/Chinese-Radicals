@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "chinese-stroke": "^0.0.1",
     "hanzi": "^2.1.5",
     "opencc-js": "^1.0.5"
   }

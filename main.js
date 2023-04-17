@@ -114,6 +114,7 @@ for (i in radicals) {
 }
 //console.log(radicals);
 
+// create array sets with components
 sets_w_components = [];
 for (let i in sets) {
     sets_w_components = sets_w_components.concat([[]]);
@@ -122,5 +123,8 @@ for (let i in sets) {
         sets_w_components[i][j][1] = sets_w_components[i][j][1].concat(hanzi.decompose(sets_w_components[i][j][0].toString())["components2"]);
     }
 }
-console.log(sets_w_components);
-//console.log(sets);
+
+console.log(require('util').inspect(sets_w_components, false, null, true));
+//console.dir(sets_w_components, {'maxArrayLength': 10})
+//console.log(sets_w_components);
+
