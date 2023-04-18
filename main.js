@@ -130,13 +130,13 @@ function groupArray(array) {
     for (let i in array) {
         value_1 = array[i][0][2];       // change this according to the value to compare
         if (set_slot == 0) {
-            new_array[set_slot] = new_array[set_slot].concat(array[i]);
+            new_array[set_slot] = new_array[set_slot].concat([array[i]]);
             value_2 = array[i][0][2];   // change this according to the value to compare
             set_slot++;
         } else if (value_1 == value_2) {
-            new_array[set_slot-1] = new_array[set_slot-1].concat(array[i]);
+            new_array[set_slot-1] = new_array[set_slot-1].concat([array[i]]);
         } else if (value_1 != value_2) {
-            new_array = new_array.concat([array[i]]);
+            new_array = new_array.concat([[array[i]]]);
             value_2 = value_1;
             set_slot++;
         }
@@ -196,6 +196,12 @@ for (let i in sets_sort_radical_counts_1) {
 sets_sort_stroke_counts_2_pseudo = sets_sort_stroke_counts_2_pseudo.concat(sets_sort_radical_counts_1);
 for (let i in sets_sort_stroke_counts_2_pseudo) {
     sets_sort_stroke_counts_2_pseudo[i] = groupArray(sets_sort_stroke_counts_2_pseudo[i]);  // group radical based on radical counts
+}
+
+for (let i in sets_sort_stroke_counts_2_pseudo) {
+    for (let j in sets_sort_stroke_counts_2_pseudo[i]) {
+        sets_sort_stroke_counts_2_pseudo[i][j].sort((a,b) => a[0][1] - b[0][1]);      // sort by stroke count
+    }
 }
 
 sets_sort_radical_groups = sets_sort_radical_groups.concat(sets_sort_stroke_counts_2_pseudo);
