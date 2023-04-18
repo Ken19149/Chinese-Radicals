@@ -120,6 +120,30 @@ function returnCommon(set1, set2, returnArray=true) {
     }
 }
 
+// group arrays with the same value in an array
+// * the value need to be sorted first
+function groupArray(array) {
+    let new_array = [[]];
+    let set_slot = 0;
+    let value_1 = null;
+    let value_2 = null;
+    for (let i in array) {
+        value_1 = array[i][0][2];       // change this according to the value to compare
+        if (set_slot == 0) {
+            new_array[set_slot] = new_array[set_slot].concat(array[i]);
+            value_2 = array[i][0][2];   // change this according to the value to compare
+            set_slot++;
+        } else if (value_1 == value_2) {
+            new_array[set_slot-1] = new_array[set_slot-1].concat(array[i]);
+        } else if (value_1 != value_2) {
+            new_array = new_array.concat([array[i]]);
+            value_2 = value_1;
+            set_slot++;
+        }
+    }
+    return new_array;
+} 
+
 //----------------------------show data---------------------------
 //show all the components for each sets
 for (let i in sets_decomposition) {
@@ -157,14 +181,26 @@ for (let i in sets) {
 
 //-------------------------sort sets_w_component---------------------------//
 
-let sets_sort_radical_counts_1 = [].concat(sets_w_components);     // sort 1 step
+
+
+let sets_sort_radical_counts_1 = []   // sort 1 step
+sets_sort_radical_counts_1 = sets_sort_radical_counts_1.concat(sets_w_components);  
+
+let sets_sort_stroke_counts_2_pseudo = [];
+let sets_sort_radical_groups = [];  // didn't use but can be used to analyze data
 
 for (let i in sets_sort_radical_counts_1) {
     sets_sort_radical_counts_1[i].sort((a,b) => b[1].length - a[1].length)   //sort with radical counts
 }
 
+sets_sort_stroke_counts_2_pseudo = sets_sort_stroke_counts_2_pseudo.concat(sets_sort_radical_counts_1);
+for (let i in sets_sort_stroke_counts_2_pseudo) {
+    sets_sort_stroke_counts_2_pseudo[i] = groupArray(sets_sort_stroke_counts_2_pseudo[i]);  // group radical based on radical counts
+}
+
+sets_sort_radical_groups = sets_sort_radical_groups.concat(sets_sort_stroke_counts_2_pseudo);
 
 
-console.log(require('util').inspect(sets_w_components, false, null, true));
-//console.dir(sets_w_components, {'maxArrayLength': 10})
-//console.log(sets_w_components);
+console.log(require('util').inspect(sets_sort_stroke_counts_2_pseudo, false, null, true));
+//console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
+//console.log(sets_sort_stroke_counts_2_pseudo);
