@@ -151,8 +151,19 @@ for (let i in sets) {
         sets_w_components[i][j][1] = sets_w_components[i][j][1].concat(hanzi.decompose(sets_w_components[i][j][0].toString())["components2"]);  // add components
         sets_w_components[i][j][1] = returnCommon(kangxi_file, sets_w_components[i][j][1], true);
         sets_w_components[i][j][0] = sets_w_components[i][j][0].concat(stroke.get(sets_w_components[i][j][0]));     // add stroke counts
+        sets_w_components[i][j][0] = sets_w_components[i][j][0].concat(sets_w_components[i][j][1].length);          // add component counts
     }
 }
+
+//-------------------------sort sets_w_component---------------------------//
+
+let sets_sort_radical_counts_1 = [].concat(sets_w_components);     // sort 1 step
+
+for (let i in sets_sort_radical_counts_1) {
+    sets_sort_radical_counts_1[i].sort((a,b) => b[1].length - a[1].length)   //sort with radical counts
+}
+
+
 
 console.log(require('util').inspect(sets_w_components, false, null, true));
 //console.dir(sets_w_components, {'maxArrayLength': 10})
