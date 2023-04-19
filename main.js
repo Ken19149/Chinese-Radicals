@@ -142,7 +142,19 @@ function groupArray(array) {
         }
     }
     return new_array;
-} 
+}
+
+// [[1,2],[5,4],[3,6]] -> [1,2,5,4,3,6]
+function breakArray(array){
+    let x = [];
+    for (let i in array) {
+        for (let j in array[i]) {
+            x = x.concat([array[i][j]]);
+        }
+    }
+    return x;
+}
+
 
 //----------------------------show data---------------------------
 //show all the components for each sets
@@ -182,11 +194,11 @@ for (let i in sets) {
 //-------------------------sort sets_w_component---------------------------//
 
 
-
 let sets_sort_radical_counts_1 = []   // sort 1 step
 sets_sort_radical_counts_1 = sets_sort_radical_counts_1.concat(sets_w_components);  
 
 let sets_sort_stroke_counts_2_pseudo = [];
+let sets_sort_stroke_counts_2 = [];
 let sets_sort_radical_groups = [];  // didn't use but can be used to analyze data
 
 for (let i in sets_sort_radical_counts_1) {
@@ -207,6 +219,12 @@ for (let i in sets_sort_stroke_counts_2_pseudo) {
 sets_sort_radical_groups = sets_sort_radical_groups.concat(sets_sort_stroke_counts_2_pseudo);
 
 
-console.log(require('util').inspect(sets_sort_stroke_counts_2_pseudo, false, null, true));
+// remove grouping in sets_sort_stroke_counts_2_pseudo / sets_sort_radical_groups for sets_sort_stroke_counts_2
+for (let i in sets_sort_stroke_counts_2_pseudo) {
+    sets_sort_stroke_counts_2 = sets_sort_stroke_counts_2.concat([[]]);
+    sets_sort_stroke_counts_2[i] = sets_sort_stroke_counts_2[i].concat(breakArray(sets_sort_stroke_counts_2_pseudo[i]));
+}
+
+console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
