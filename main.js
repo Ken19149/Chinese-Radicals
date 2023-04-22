@@ -225,6 +225,24 @@ for (let i in sets_sort_stroke_counts_2_pseudo) {
     sets_sort_stroke_counts_2[i] = sets_sort_stroke_counts_2[i].concat(breakArray(sets_sort_stroke_counts_2_pseudo[i]));
 }
 
+//-------------------FIND CHARACTER SET-----------------------//
+let final_set = [];
+let candidate_pool = [];
+candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
+
+function findOptimizedSet(candidate, radicals) {
+    let final_set = [];
+    let used_radical = [];
+    let total_stroke = 0;
+    
+    for (let i in candidate) {
+        final_set = final_set.concat(candidate[i][0][0]);
+    }
+    
+    return final_set
+}
+
+
 console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
