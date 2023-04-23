@@ -60,16 +60,16 @@ for (i in sets) {
         sets_decomposition[i][2] = sets_decomposition[i][2].concat(decom["components3"]);
     }
 
-    sets_decomposition[i][0] = removeDupe(sets_decomposition[i][0], true, true);
-    sets_decomposition[i][1] = removeDupe(sets_decomposition[i][1], true, true);
-    sets_decomposition[i][2] = removeDupe(sets_decomposition[i][2], true, true);
+    sets_decomposition[i][0] = removeDupe(sets_decomposition[i][0], true, true, true);
+    sets_decomposition[i][1] = removeDupe(sets_decomposition[i][1], true, true, true);
+    sets_decomposition[i][2] = removeDupe(sets_decomposition[i][2], true, true, true);
 }
 
 //------------------------------Functions-----------------------------------//
 // modify code from common radicals.js
 
 // return as string
-function removeDupe(array, removeAlphabet = false, removeNumber = false, removeSyntax = false) {
+function removeDupe(array, returnStr=true, removeAlphabet = false, removeNumber = false, removeSyntax = false) {
     let str_array = "";
     let str_array_remove_dupe = "";
     for (let i in array) {
@@ -91,8 +91,15 @@ function removeDupe(array, removeAlphabet = false, removeNumber = false, removeS
     if (removeNumber == true) {
         str_array_remove_dupe = str_array_remove_dupe.replace(/[0-9]/g, "");
     }
-
-    return str_array_remove_dupe;
+    if (returnStr == false) {
+        let array_remove_dupe = [];
+        for (let i in str_array_remove_dupe) {
+            array_remove_dupe = array_remove_dupe.concat(str_array_remove_dupe[i]);
+        }
+        return array_remove_dupe;
+    } else if (returnStr == true) {
+        return str_array_remove_dupe;
+    }
 }
 
 // find common elements function
@@ -107,7 +114,7 @@ function returnCommon(set1, set2, returnArray=true) {
         }
     }
 
-    set_common = removeDupe(set_common, true, true);    // turned into string
+    set_common = removeDupe(set_common, true, true, true);    // turned into string
     array_set_common = [];
 
     if (returnArray = true) {
@@ -233,16 +240,20 @@ candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
 function findOptimizedSet(candidate, radicals) {
     let final_set = [];
     let used_radical = [];
+    let str_used_radical = "";
     let total_stroke = 0;
     
     for (let i in candidate) {
         final_set = final_set.concat(candidate[i][0][0]);
+        used_radical = removeDupe(used_radical.concat(candidate[i][1]), false);     //keep it as array
+
     }
-    
+    console.log(used_radical);
+    console.log(used_radical.length);
     return final_set
 }
 
-
-console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
+findOptimizedSet(candidate_pool[4], radicals);
+//console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
