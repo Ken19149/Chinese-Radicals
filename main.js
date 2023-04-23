@@ -237,6 +237,8 @@ let final_set = [];
 let candidate_pool = [];
 candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
 
+full_kangxi = kangxi_file.split("\r\n").join("").replace(/ /g, "");     // probably not used but only for testing
+
 function findOptimizedSet(candidate, radicals) {
     let final_set = [];
     let used_radical = [];
@@ -245,15 +247,22 @@ function findOptimizedSet(candidate, radicals) {
     
     for (let i in candidate) {
         final_set = final_set.concat(candidate[i][0][0]);
-        used_radical = removeDupe(used_radical.concat(candidate[i][1]), false);     //keep it as array
+        for (let j in candidate[i][1]) {        // check radicals
+            for (let k in radicals) {
+                for (let l in radicals[k]) {
+                    if (candidate[i][1][j] == radicals[k][l]) {
+                        used_radical = removeDupe(used_radical.concat(radicals[k]), false); //keep it as array
+                    }
+                }
+            }
+        }
 
     }
     console.log(used_radical);
-    console.log(used_radical.length);
     return final_set
 }
-
-findOptimizedSet(candidate_pool[4], radicals);
+console.log(radicals);
+findOptimizedSet(candidate_pool[0], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
