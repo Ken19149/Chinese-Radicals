@@ -162,6 +162,38 @@ function breakArray(array){
     return x;
 }
 
+function returnExclude(sample, set, returnArray=true) {
+    let sample_array = [];
+    let set_array = [];
+    let excluded = [];
+    for (let i in sample) {
+        sample_array = sample_array.concat(sample[i]);
+    }
+    for (let i in set) {
+        set_array = set_array.concat(set[i]);
+    }
+
+    for (let i in sample_array) {
+        for (let j in set) {
+            if (sample_array[i] == set[j] ) {
+                break;
+            } else if (sample_array[i] != set_array[set_array.length-1]) {
+                excluded = excluded.concat(sample_array[i]);
+                break;
+            }
+        }
+    }
+
+    if (returnArray) {
+        return excluded;
+    } else if (!returnArray) {
+        let str_excluded = "";
+        for (let i in excluded) {
+            str_excluded = str_excluded.concat(excluded[i]);
+        }
+        return str_excluded;
+    }
+}
 
 //----------------------------show data---------------------------
 //show all the components for each sets
@@ -252,6 +284,7 @@ function findOptimizedSet(candidate, radicals) {
                 for (let l in radicals[k]) {
                     if (candidate[i][1][j] == radicals[k][l]) {
                         used_radical = removeDupe(used_radical.concat(radicals[k]), false); //keep it as array
+                        continue;
                     }
                 }
             }
@@ -261,8 +294,8 @@ function findOptimizedSet(candidate, radicals) {
     console.log(used_radical);
     return final_set
 }
-console.log(radicals);
-findOptimizedSet(candidate_pool[0], radicals);
+
+findOptimizedSet(candidate_pool[4], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
