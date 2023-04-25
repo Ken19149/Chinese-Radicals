@@ -166,6 +166,7 @@ function returnExclude(sample, set, returnArray=true) {
     let sample_array = [];
     let set_array = [];
     let excluded = [];
+    // turn sample and set into array
     for (let i in sample) {
         sample_array = sample_array.concat(sample[i]);
     }
@@ -173,6 +174,7 @@ function returnExclude(sample, set, returnArray=true) {
         set_array = set_array.concat(set[i]);
     }
 
+    // try to find the excluded set (not finish) ***!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     for (let i in sample_array) {
         for (let j in set) {
             if (sample_array[i] == set[j] ) {
@@ -184,6 +186,7 @@ function returnExclude(sample, set, returnArray=true) {
         }
     }
 
+    // return as string or array
     if (returnArray) {
         return excluded;
     } else if (!returnArray) {
