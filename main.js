@@ -162,6 +162,13 @@ function breakArray(array){
     return x;
 }
 
+// from internet --------------------------------- have to edit and combine with below function later
+function getDifference(setA, setB) {
+    return new Set(
+        [...setA].filter(element => !setB.has(element))
+    );
+}
+
 function returnExclude(sample, set, returnArray=true) {
     let sample_array = [];
     let set_array = [];
