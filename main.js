@@ -281,6 +281,7 @@ candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
 
 full_kangxi = kangxi_file.split("\r\n").join("").replace(/ /g, "");     // probably not used but only for testing
 
+/*  probably will create a new algorithm (haven't worked on this for quite a long time and forgot what did i write) 
 function findOptimizedSet(candidate, radicals) {
     let final_set = [];
     let used_radical = [];
@@ -304,9 +305,31 @@ function findOptimizedSet(candidate, radicals) {
     console.log(used_radical);
     return final_set;
 }
+*/
 
-//findOptimizedSet(candidate_pool[4], radicals);
-console.log(candidate_pool[1]);
+function findOptimizedSet(candidate, radicals) {
+    let final_set = [[], 0];    // [[set],stroke]
+
+    while (radicals.length > 0) {
+        final_set[0] = final_set[0].concat(candidate[0][0][0]);    //add the first character from candidate into final array
+        for (let i in candidate[0][1]) {    // loop through components
+            let j = radicals.length;        // loop through each radicals group backward
+            while (j--) {
+                let k = radicals[j].length; //loop through each radicals backward
+                while (k--) {
+                    if (candidate[0][1][i] == radicals[j][k]) {
+                        console.log("match: " + candidate[0][1][i] + " and " + radicals[j][k] + " in " + radicals[j]);
+                        radicals.splice(j, 1);  //delete the radical group
+                    }
+                }
+            }
+        }
+    }
+
+    return final_set;
+}
+
+findOptimizedSet(candidate_pool[0], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
