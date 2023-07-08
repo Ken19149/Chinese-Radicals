@@ -309,6 +309,7 @@ function findOptimizedSet(candidate, radicals) {
 
 function findOptimizedSet(candidate, radicals) {
     let final_set = [[], 0];    // [[set],stroke]
+    let notFoundRadicals = [];
 
     let func_radicals = [];     //to not change the original data when using function
     func_radicals = func_radicals.concat(radicals);
@@ -335,15 +336,21 @@ function findOptimizedSet(candidate, radicals) {
             haveRadical = false;
         }
     }
-    console.log(func_radicals);
-    console.log(final_set);
-    return final_set;
+    
+    for (i in func_radicals) {
+        if (func_radicals[i] != 0) {
+            notFoundRadicals = notFoundRadicals.concat([func_radicals[i]]);
+        }
+    }
+
+    final_set = final_set.concat([notFoundRadicals]);
+    return final_set;       //[[character set], total stroke, [not found radical set]]
 }
 
 //[["character", stroke, component_count],["c","h","a","r","t","e"]]
 //candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["do",2,2],["d","o"]],[["deer",4,3],["d","e","r"]]];
 //radicals = [["b","B"],["d","D"],["e","E"],["o"],["i"],["g","G"],["r","R"],["z"]];
-findOptimizedSet(candidate_pool[1], radicals);
+findOptimizedSet(candidate_pool[4], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
