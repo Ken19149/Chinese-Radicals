@@ -12,8 +12,8 @@ var set_simplified = fs.readFileSync("set-simplified.txt", "utf8")
 var traditional = converter(set_simplified);         //convert simplified -> traditional
 
 //create sets of 1k - 5k characters
-interval_length = 1000
-sets_count = 5
+interval_length = 1000;
+sets_count = 5;
 sets = createSets(traditional, sets_count, interval_length);    //input_set = really long string; 
 
 function createSets(input_set, sets_count = 5, interval_length = 1000){
@@ -322,7 +322,31 @@ function findOptimizedSet(candidate, radicals) {
     return final_set;       //[[character set], total stroke, [not found radical set]]
 }
 
+//write output data into files 
+for (let i = 0; i < sets_count; i++) {
+    let name = "output\\" + (i+1) * interval_length + ".txt";
+    let input = "";
+    for (let j in candidate_pool[i]) {
+        input = input.concat(candidate_pool[i][j][0][0]);
+    }
 
+    let output = findOptimizedSet(candidate_pool[i], radicals);
+    let output_set = "";
+    for (let k in output[0]) {
+        output_set = output_set.concat(output[0][k]);
+    }
+    let output_stroke_count = output[1];
+    let output_missing_radicals = "";
+    for (let l in output[0]) {
+        output_missing_radicals = output_missing_radicals.concat(output[2][l]);
+    }
+    output_missing_radicals = output_missing_radicals.replace(/undefined/g, "");
+    output_missing_radicals = output_missing_radicals.replace(/,/g, "");
+
+    let data = "Input - " + input.length + "\n\n" + input + "\n\n\nOutput - " + output_set.length + "\n\n" + output_set + "\n\n\nMissing Radicals - " + output_missing_radicals.length +"\n\n" + output_missing_radicals + "\n\nTotal Stroke - " + output_stroke_count;
+    fs.writeFileSync(name, data);
+
+}
 
 //[["character", stroke, component_count],["c","h","a","r","t","e"]]
 //candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["do",2,2],["d","o"]],[["deer",4,3],["d","e","r"]]];
