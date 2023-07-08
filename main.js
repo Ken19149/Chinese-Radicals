@@ -310,25 +310,26 @@ function findOptimizedSet(candidate, radicals) {
 function findOptimizedSet(candidate, radicals) {
     let final_set = [[], 0];    // [[set],stroke]
 
-    while (radicals.length > 0) {
-        final_set[0] = final_set[0].concat(candidate[0][0][0]);    //add the first character from candidate into final array
-        for (let i in candidate[0][1]) {    // loop through components
-            let j = radicals.length;        // loop through each radicals group backward
-            while (j--) {
-                let k = radicals[j].length; //loop through each radicals backward
-                while (k--) {
-                    if (candidate[0][1][i] == radicals[j][k]) {
-                        console.log("match: " + candidate[0][1][i] + " and " + radicals[j][k] + " in " + radicals[j]);
-                        radicals.splice(j, 1);  //delete the radical group
+    for (let i in candidate) {
+        for (let j in candidate[i][1]) {
+            console.log(candidate[i][1][j]);
+            for (let k in radicals) {
+                for (let l in radicals[k]) {
+                    if (candidate[i][1][j] == radicals[k][l]) {
+
                     }
                 }
             }
         }
     }
 
+    console.log(final_set);
     return final_set;
 }
 
+//[["character", stroke, component_count],["c","h","a","r","t","e"]]
+candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["deer",4,3],["d","e","r"]]];
+radicals = [["b","B"],["d","D"],["e","E"],["o"],["i"],["g","G"],["r","R"]];
 findOptimizedSet(candidate_pool[0], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
