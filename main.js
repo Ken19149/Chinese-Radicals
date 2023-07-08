@@ -206,6 +206,7 @@ function returnExclude(sample, set, returnArray=true) {
 }
 
 //----------------------------show data---------------------------
+/** 
 //show all the components for each sets
 for (let i in sets_decomposition) {
     console.log(sets_decomposition[i][1]);
@@ -215,7 +216,7 @@ for (let i in sets_decomposition) {
     let n = parseInt(i)+1;
     console.log((n * interval_length) + ": " + sets_decomposition[i][0].length + " | " + sets_decomposition[i][1].length + " | " + sets_decomposition[i][2].length);
 }
-
+**/
 //---------------------radical stuffs-------------------------------
 // create array for kangxi radicals
 
@@ -281,32 +282,6 @@ candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
 
 full_kangxi = kangxi_file.split("\r\n").join("").replace(/ /g, "");     // probably not used but only for testing
 
-/*  probably will create a new algorithm (haven't worked on this for quite a long time and forgot what did i write) 
-function findOptimizedSet(candidate, radicals) {
-    let final_set = [];
-    let used_radical = [];
-    let str_used_radical = "";
-    let total_stroke = 0;
-    
-    for (let i in candidate) {
-        final_set = final_set.concat(candidate[i][0][0]);
-        for (let j in candidate[i][1]) {        // check radicals
-            for (let k in radicals) {
-                for (let l in radicals[k]) {
-                    if (candidate[i][1][j] == radicals[k][l]) {
-                        used_radical = removeDupe(used_radical.concat(radicals[k]), false); //keep it as array
-                        continue;
-                    }
-                }
-            }
-        }
-
-    }
-    console.log(used_radical);
-    return final_set;
-}
-*/
-
 function findOptimizedSet(candidate, radicals) {
     let final_set = [[], 0];    // [[set],stroke]
     let notFoundRadicals = [];
@@ -346,6 +321,8 @@ function findOptimizedSet(candidate, radicals) {
     final_set = final_set.concat([notFoundRadicals]);
     return final_set;       //[[character set], total stroke, [not found radical set]]
 }
+
+
 
 //[["character", stroke, component_count],["c","h","a","r","t","e"]]
 //candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["do",2,2],["d","o"]],[["deer",4,3],["d","e","r"]]];
