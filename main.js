@@ -310,27 +310,40 @@ function findOptimizedSet(candidate, radicals) {
 function findOptimizedSet(candidate, radicals) {
     let final_set = [[], 0];    // [[set],stroke]
 
-    for (let i in candidate) {
-        for (let j in candidate[i][1]) {
-            console.log(candidate[i][1][j]);
-            for (let k in radicals) {
-                for (let l in radicals[k]) {
-                    if (candidate[i][1][j] == radicals[k][l]) {
+    let func_radicals = [];     //to not change the original data when using function
+    func_radicals = func_radicals.concat(radicals);
+    let func_candidate = [];
+    func_candidate = func_candidate.concat(candidate);
 
+    let haveRadical = false;
+
+    for (let i in func_candidate) {
+        for (let j in func_candidate[i][1]) {
+            for (let k in func_radicals) {
+                for (let l in func_radicals[k]) {
+                    if (func_candidate[i][1][j] == func_radicals[k][l]) {
+                        haveRadical = true;
+                        func_radicals[k] = 0;
                     }
                 }
             }
         }
-    }
 
+        if (haveRadical) {
+            final_set[0] = final_set[0].concat(func_candidate[i][0][0]);    //add character to final list
+            final_set[1] = final_set[1] + func_candidate[i][0][1];          //add stroke count
+            haveRadical = false;
+        }
+    }
+    console.log(func_radicals);
     console.log(final_set);
     return final_set;
 }
 
 //[["character", stroke, component_count],["c","h","a","r","t","e"]]
-candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["deer",4,3],["d","e","r"]]];
-radicals = [["b","B"],["d","D"],["e","E"],["o"],["i"],["g","G"],["r","R"]];
-findOptimizedSet(candidate_pool[0], radicals);
+//candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["do",2,2],["d","o"]],[["deer",4,3],["d","e","r"]]];
+//radicals = [["b","B"],["d","D"],["e","E"],["o"],["i"],["g","G"],["r","R"],["z"]];
+findOptimizedSet(candidate_pool[1], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
