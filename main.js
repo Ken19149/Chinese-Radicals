@@ -281,7 +281,7 @@ let candidate_pool = [];
 candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
 
 full_kangxi = kangxi_file.split("\r\n").join("").replace(/ /g, "");     // probably not used but only for testing
-
+/*
 function findOptimizedSet(candidate, radicals) {
     let final_set = [[], 0];    // [[set],stroke]
     let notFoundRadicals = [];
@@ -320,6 +320,19 @@ function findOptimizedSet(candidate, radicals) {
 
     final_set = final_set.concat([notFoundRadicals]);
     return final_set;       //[[character set], total stroke, [not found radical set]]
+}
+*/
+
+//new find optimized set function
+function findOptimizedSet(candidate, radicals) {
+    return final_setl_set;
+}
+
+//sorting algorithm
+
+function optimizedSort(dataset, radicals) {
+    let sorted_data = [];
+    return sorted_data;
 }
 
 //write output data into files 
