@@ -324,13 +324,13 @@ function findOptimizedSet(candidate, radicals) {
 */
 
 //new find optimized set function
-function findOptimizedSet(candidate, radicals) {
+function radicalCountOptimization(candidate, radicals) {
     return final_setl_set;
 }
 
 //sorting algorithm
 
-function optimizedSort(dataset, radicals) {
+function radicalWeightOptimization(dataset, radicals) {
     let sorted_data = [];
     return sorted_data;
 }
