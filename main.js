@@ -337,7 +337,7 @@ function radicalCountOptimization(candidate, radicals) {
     while (copy_candidate[0][0][2] != 0) {  //check if the 1st character's radical count = 0
         //select 1st character
         for (let i in candidate) {    //loop through candidate characters
-            if (candidate[i][0][0] == copy_candidate[7][0][0]) {
+            if (candidate[i][0][0] == copy_candidate[0][0][0]) {
                 final_set[0] = final_set[0].concat(candidate[i][0][0]);
                 final_set[1] += candidate[i][0][1];     //add stroke to total stroke
                 final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
@@ -346,7 +346,23 @@ function radicalCountOptimization(candidate, radicals) {
         }
 
         //remove radicals
-        
+        for (let i in copy_candidate[0][1]){
+            for (let j in copy_radicals){
+                for (let k in copy_radicals[j]){
+                    if (copy_candidate[0][1][i] == copy_radicals[j][k]) {
+                        copy_radicals[j] = 0;
+                        break;
+                    }
+                }
+            }
+        }
+        copy_radicals = copy_radicals.filter(function(noZero) {return noZero !== 0;});  //remove all zero value from radicals
+        copy_candidate.shift();     //remove 1st character data
+
+        //sort
+
+        console.log(copy_radicals);
+        copy_candidate[0][0][2] = 0;
         
     }
 
@@ -377,6 +393,20 @@ function radicalWeightOptimization(dataset, radicals) {
         }
 
         //remove radicals
+        for (let i in copy_candidate[0][1]){
+            for (let j in copy_radicals){
+                for (let k in copy_radicals[j]){
+                    if (copy_candidate[0][1][i] == copy_radicals[j][k]) {
+                        copy_radicals[j] = 0;
+                        break;
+                    }
+                }
+            }
+        }
+        copy_radicals = copy_radicals.filter(function(noZero) {return noZero !== 0;});  //remove all zero value from radicals
+        copy_candidate.shift();     //remove 1st character data
+
+        //sort
         
     }
 
@@ -410,7 +440,6 @@ for (let i = 0; i < sets_count; i++) {
 
 }
 */
-
 radicalCountOptimization(candidate_pool[0], radicals);
 //console.log(candidate_pool[1][0][0][2]);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
