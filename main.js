@@ -323,19 +323,68 @@ function findOptimizedSet(candidate, radicals) {
 }
 */
 
-//new find optimized set function
+//optimization functon using radical count sorting algorithm
 function radicalCountOptimization(candidate, radicals) {
-    return final_setl_set;
+    let final_set = [[], 0, [], []];    // [[set], total stroke, [missing radicals], [character, stroke, radical_count, [radicals]]]
+    let missing_radicals = [];          // copy_radicals after removed all the matched radicals
+
+    //make a copy
+    let copy_radicals = [];
+    copy_radicals = copy_radicals.concat(radicals);
+    let copy_candidate = [];
+    copy_candidate = copy_candidate.concat(candidate);
+
+    while (copy_candidate[0][0][2] != 0) {  //check if the 1st character's radical count = 0
+        //select 1st character
+        for (let i in candidate) {    //loop through candidate characters
+            if (candidate[i][0][0] == copy_candidate[7][0][0]) {
+                final_set[0] = final_set[0].concat(candidate[i][0][0]);
+                final_set[1] += candidate[i][0][1];     //add stroke to total stroke
+                final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
+                break;
+            }
+        }
+
+        //remove radicals
+        
+        
+    }
+
+    return final_set;
 }
 
-//sorting algorithm
+//optimization function using weight sorting algorithm
 
 function radicalWeightOptimization(dataset, radicals) {
-    let sorted_data = [];
-    return sorted_data;
+    let final_set = [[], 0, [], []];    // [[set], total stroke, [missing radicals], [character, stroke, radical_count, [radicals]]]
+    let missing_radicals = [];          // copy_radicals after removed all the matched radicals
+
+    //make a copy
+    let copy_radicals = [];
+    copy_radicals = copy_radicals.concat(radicals);
+    let copy_candidate = [];
+    copy_candidate = copy_candidate.concat(candidate);
+
+    while (copy_candidate[0][0][2] != 0) {  //check if the 1st character's radical count = 0
+        //select 1st character
+        for (let i in candidate) {    //loop through candidate characters
+            if (candidate[i][0][0] == copy_candidate[7][0][0]) {
+                final_set[0] = final_set[0].concat(candidate[i][0][0]);
+                final_set[1] += candidate[i][0][1];     //add stroke to total stroke
+                final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
+                break;
+            }
+        }
+
+        //remove radicals
+        
+    }
+
+    return final_set;
 }
 
-//write output data into files 
+//write output data into files
+/*
 for (let i = 0; i < sets_count; i++) {
     let name = "output\\" + (i+1) * interval_length + ".txt";
     let input = "";
@@ -360,11 +409,10 @@ for (let i = 0; i < sets_count; i++) {
     fs.writeFileSync(name, data);
 
 }
+*/
 
-//[["character", stroke, component_count],["c","h","a","r","t","e"]]
-//candidate_pool[0] = [[["birD", 4, 4],["b","i","r","D"]],[["dog",3,3],["d","o","g"]],[["do",2,2],["d","o"]],[["deer",4,3],["d","e","r"]]];
-//radicals = [["b","B"],["d","D"],["e","E"],["o"],["i"],["g","G"],["r","R"],["z"]];
-findOptimizedSet(candidate_pool[4], radicals);
+radicalCountOptimization(candidate_pool[0], radicals);
+//console.log(candidate_pool[1][0][0][2]);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
