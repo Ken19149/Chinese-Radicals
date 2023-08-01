@@ -243,7 +243,6 @@ for (let i in sets) {
 
 //-------------------------sort sets_w_component---------------------------//
 
-
 let sets_sort_radical_counts_1 = []   // sort 1 step
 sets_sort_radical_counts_1 = sets_sort_radical_counts_1.concat(sets_w_components);  
 
@@ -326,7 +325,7 @@ function findOptimizedSet(candidate, radicals) {
 //optimization functon using radical count sorting algorithm
 function radicalCountOptimization(candidate, radicals) {
     let final_set = [[], 0, [], []];    // [[set], total stroke, [missing radicals], [character, stroke, radical_count, [radicals]]]
-    let missing_radicals = [];          // copy_radicals after removed all the matched radicals
+    let missing_radicals = "";          // copy_radicals after removed all the matched radicals
 
     //make a copy
     let copy_radicals = [];
@@ -385,7 +384,14 @@ function radicalCountOptimization(candidate, radicals) {
         
     }
 
-    console.log(final_set[0].length);
+    //add missing radicals to final set
+    for (let i in copy_radicals) {
+        for (let j in copy_radicals[i]) {
+            missing_radicals = missing_radicals.concat(copy_radicals[i][j]);
+        }
+    }
+    final_set[2] = missing_radicals;
+
     return final_set;
 }
 
