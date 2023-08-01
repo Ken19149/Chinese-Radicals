@@ -377,12 +377,15 @@ function radicalCountOptimization(candidate, radicals) {
         }
         
         //sort
-        
-
-        copy_candidate[0][0][2] = 0;    //stop
+        copy_candidate = groupArray(copy_candidate.sort(function(a,b) {return a[0][2] - b[0][2]}).reverse());    // sort by updated radical count
+        for (let i in copy_candidate) {
+            copy_candidate[i].sort(function(a,b) {return a[0][1] - b[0][1]});  //sort by stroke count
+        }
+        copy_candidate = breakArray(copy_candidate);
         
     }
 
+    console.log(final_set[0].length);
     return final_set;
 }
 
