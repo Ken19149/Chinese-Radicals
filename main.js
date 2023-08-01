@@ -359,16 +359,32 @@ function radicalCountOptimization(candidate, radicals) {
         copy_radicals = copy_radicals.filter(function(noZero) {return noZero !== 0;});  //remove all zero value from radicals
         copy_candidate.shift();     //remove 1st character data
 
-        //sort
-
-        console.log(copy_radicals);
-        copy_candidate[0][0][2] = 0;
+        
+        //assign updated radical data
+        for (let i in copy_candidate) {
+            let temp_matching_rad = [];
+            for (let j in copy_candidate[i][1]) {
+                for (let k in copy_radicals) {
+                    for (let l in copy_radicals[k]) {
+                        if (copy_candidate[i][1][j] == copy_radicals[k][l]) {
+                            temp_matching_rad = temp_matching_rad.concat(copy_candidate[i][1][j]);
+                            break;
+                        }
+                    }
+                }
+            }
+            console.log(temp_matching_rad);
+            break;  //only test first character
+        }
+        
+        copy_candidate[0][0][2] = 0;    //stop
         
     }
 
     return final_set;
 }
 
+//console.log(candidate_pool[0]);
 //optimization function using weight sorting algorithm
 
 function radicalWeightOptimization(dataset, radicals) {
@@ -407,6 +423,7 @@ function radicalWeightOptimization(dataset, radicals) {
         copy_candidate.shift();     //remove 1st character data
 
         //sort
+
         
     }
 
