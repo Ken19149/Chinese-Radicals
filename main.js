@@ -359,7 +359,6 @@ function radicalCountOptimization(candidate, radicals) {
         copy_radicals = copy_radicals.filter(function(noZero) {return noZero !== 0;});  //remove all zero value from radicals
         copy_candidate.shift();     //remove 1st character data
 
-        
         //assign updated radical data
         for (let i in copy_candidate) {
             let temp_matching_rad = [];
@@ -373,10 +372,13 @@ function radicalCountOptimization(candidate, radicals) {
                     }
                 }
             }
-            console.log(temp_matching_rad);
-            break;  //only test first character
+            copy_candidate[i][1] = temp_matching_rad;   //update matching radicals
+            copy_candidate[i][0][2] = temp_matching_rad.length; //update matching radical count
         }
         
+        //sort
+        
+
         copy_candidate[0][0][2] = 0;    //stop
         
     }
