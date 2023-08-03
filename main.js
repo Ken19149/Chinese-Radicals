@@ -441,6 +441,10 @@ function radicalWeightOptimization(dataset, radicals) {
     return final_set;
 }
 
+function returnTextFormat(outputData) {
+    let final_text = "";
+    return final_text;
+}
 //write output data into files
 /*
 for (let i = 0; i < sets_count; i++) {
