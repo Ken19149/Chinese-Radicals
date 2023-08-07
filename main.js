@@ -324,7 +324,7 @@ function findOptimizedSet(candidate, radicals) {
 
 //optimization functon using radical count sorting algorithm
 function radicalCountOptimization(candidate, radicals) {
-    let final_set = [[], 0, [], []];    // [[set], total stroke, [missing radicals], [character, stroke, radical_count, [radicals]]]
+    let final_set = [[], 0, [], []];    // [[set], total stroke, "missing radicals", [character, stroke, radical_count, [radicals]]]
     let missing_radicals = "";          // copy_radicals after removed all the matched radicals
 
     //make a copy
@@ -392,14 +392,23 @@ function radicalCountOptimization(candidate, radicals) {
     }
     final_set[2] = missing_radicals;
 
+    console.log(final_set);
     return final_set;
 }
 
 //console.log(candidate_pool[0]);
 //optimization function using weight sorting algorithm
+function returnWeight(element, candidate){     //an element of candidate, original candidate
+    for (let i in candidate) {    //loop through candidate characters
+        if (candidate[i][0][0] == element[0][0]) {
+            let weight = element[0][2]/candidate[i][0][2];
+            return weight;
+        }
+    }
+}
 
-function radicalWeightOptimization(dataset, radicals) {
-    let final_set = [[], 0, [], []];    // [[set], total stroke, [missing radicals], [character, stroke, radical_count, [radicals]]]
+function radicalWeightOptimization(candidate, radicals) {
+    let final_set = [[], 0, [], []];    // [[set], total stroke, "missing radicals", [character, stroke, radical_count, [radicals]]]
     let missing_radicals = [];          // copy_radicals after removed all the matched radicals
 
     //make a copy
@@ -408,36 +417,58 @@ function radicalWeightOptimization(dataset, radicals) {
     let copy_candidate = [];
     copy_candidate = copy_candidate.concat(candidate);
 
-    while (copy_candidate[0][0][2] != 0) {  //check if the 1st character's radical count = 0
-        //select 1st character
-        for (let i in candidate) {    //loop through candidate characters
-            if (candidate[i][0][0] == copy_candidate[7][0][0]) {
-                final_set[0] = final_set[0].concat(candidate[i][0][0]);
-                final_set[1] += candidate[i][0][1];     //add stroke to total stroke
-                final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
-                break;
-            }
-        }
+    while (Math.max(...copy_candidate.map(o => o[0][2])) != 0) {  //check if weight is not 0
+        //select
+        let i = copy_candidate.map(o => returnWeight(o,candidate)).filter(o => !Number.isNaN(o)).indexOf(Math.max(...copy_candidate.map(o => returnWeight(o,candidate)).filter(o => !Number.isNaN(o))));  //index of the best candidate
+        console.log("i: " + i);
+
+        final_set[0] = final_set[0].concat(candidate[i][0][0]);
+        final_set[1] += candidate[i][0][1];     //add stroke to total stroke
+        final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
 
         //remove radicals
-        for (let i in copy_candidate[0][1]){
-            for (let j in copy_radicals){
-                for (let k in copy_radicals[j]){
-                    if (copy_candidate[0][1][i] == copy_radicals[j][k]) {
-                        copy_radicals[j] = 0;
+        for (let j in copy_candidate[i][1]){
+            for (let k in copy_radicals){
+                for (let l in copy_radicals[k]){
+                    if (copy_candidate[i][1][j] == copy_radicals[k][l]) {
+                        copy_radicals[k] = 0;
                         break;
                     }
                 }
             }
         }
+
         copy_radicals = copy_radicals.filter(function(noZero) {return noZero !== 0;});  //remove all zero value from radicals
-        copy_candidate.shift();     //remove 1st character data
+        copy_candidate.splice(i, 0)     //remove the selected character
 
-        //sort
-
+        //assign updated radical data
+        for (let i in copy_candidate) {
+            let temp_matching_rad = [];
+            for (let j in copy_candidate[i][1]) {
+                for (let k in copy_radicals) {
+                    for (let l in copy_radicals[k]) {
+                        if (copy_candidate[i][1][j] == copy_radicals[k][l]) {
+                            temp_matching_rad = temp_matching_rad.concat(copy_candidate[i][1][j]);
+                            break;
+                        }
+                    }
+                }
+            }
+            copy_candidate[i][1] = temp_matching_rad;   //update matching radicals
+            copy_candidate[i][0][2] = temp_matching_rad.length; //update matching radical count
+        }
         
     }
 
+    //add missing radicals to final set
+    for (let i in copy_radicals) {
+        for (let j in copy_radicals[i]) {
+            missing_radicals = missing_radicals.concat(copy_radicals[i][j]);
+        }
+    }
+    final_set[2] = missing_radicals;
+
+    console.log(final_set);
     return final_set;
 }
 
@@ -445,6 +476,7 @@ function returnTextFormat(outputData) {
     let final_text = "";
     return final_text;
 }
+
 //write output data into files
 /*
 for (let i = 0; i < sets_count; i++) {
@@ -472,8 +504,11 @@ for (let i = 0; i < sets_count; i++) {
 
 }
 */
-radicalCountOptimization(candidate_pool[0], radicals);
-//console.log(candidate_pool[1][0][0][2]);
+
+console.log(returnWeight(candidate_pool[0][0], candidate_pool[0]));
+console.log(Math.max(...(candidate_pool[0].map(o => returnWeight(o,candidate_pool[0])).filter(o => !Number.isNaN(o)))));
+//console.log(...candidate_pool[0]);
+//radicalWeightOptimization(candidate_pool[0], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
