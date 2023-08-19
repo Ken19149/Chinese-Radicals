@@ -280,6 +280,8 @@ let candidate_pool = [];
 candidate_pool = candidate_pool.concat(sets_sort_stroke_counts_2);
 
 full_kangxi = kangxi_file.split("\r\n").join("").replace(/ /g, "");     // probably not used but only for testing
+
+//old function that doesn't work bc it doesn't sort the set after each loop
 /*
 function findOptimizedSet(candidate, radicals) {
     let final_set = [[], 0];    // [[set],stroke]
@@ -417,15 +419,17 @@ function radicalWeightOptimization(candidate, radicals) {
     let copy_candidate = [];
     copy_candidate = copy_candidate.concat(candidate);
 
-    while (Math.max(...copy_candidate.map(o => o[0][2])) != 0) {  //check if weight is not 0
+    let x = Math.max(...String(copy_candidate.map(o => o[0][2])).replace(/NaN/g,0).split(",").map(Number));  //map by rad_count and return the highest one 
+    while (x > 0) {  //check if radical exist
         //select
-        let i = copy_candidate.map(o => returnWeight(o,candidate)).filter(o => !Number.isNaN(o)).indexOf(Math.max(...copy_candidate.map(o => returnWeight(o,candidate)).filter(o => !Number.isNaN(o))));  //index of the best candidate
-        console.log("i: " + i);
+        let i = String(copy_candidate.map(o => returnWeight(o,candidate))).replace(/NaN/g,0).split(",").map(Number).indexOf(Math.max(...String(copy_candidate.map(o => returnWeight(o,candidate))).replace(/NaN/g,0).split(",").map(Number)));  //index of the best candidate
+        console.log("i="+i,"weight="+returnWeight(copy_candidate[i],candidate));
 
         final_set[0] = final_set[0].concat(candidate[i][0][0]);
         final_set[1] += candidate[i][0][1];     //add stroke to total stroke
         final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
-
+        //console.log(require('util').inspect(final_set, false, null, true));
+        
         //remove radicals
         for (let j in copy_candidate[i][1]){
             for (let k in copy_radicals){
@@ -457,7 +461,7 @@ function radicalWeightOptimization(candidate, radicals) {
             copy_candidate[i][1] = temp_matching_rad;   //update matching radicals
             copy_candidate[i][0][2] = temp_matching_rad.length; //update matching radical count
         }
-        
+        x = Math.max(...String(copy_candidate.map(o => o[0][2])).replace(/NaN/g,0).split(",").map(Number));  //set the new highest radical count
     }
 
     //add missing radicals to final set
@@ -468,7 +472,7 @@ function radicalWeightOptimization(candidate, radicals) {
     }
     final_set[2] = missing_radicals;
 
-    console.log(final_set);
+    console.log(final_set[3]);
     return final_set;
 }
 
@@ -505,10 +509,9 @@ for (let i = 0; i < sets_count; i++) {
 }
 */
 
-console.log(returnWeight(candidate_pool[0][0], candidate_pool[0]));
-console.log(Math.max(...(candidate_pool[0].map(o => returnWeight(o,candidate_pool[0])).filter(o => !Number.isNaN(o)))));
-//console.log(...candidate_pool[0]);
-//radicalWeightOptimization(candidate_pool[0], radicals);
+//console.log(returnWeight(candidate_pool[0][0], candidate_pool[0]));
+//console.log(Math.max(...(candidate_pool[0].map(o => returnWeight(o,candidate_pool[0])).filter(o => !Number.isNaN(o)))));
+radicalWeightOptimization(candidate_pool[0], radicals);
 //console.log(require('util').inspect(sets_sort_stroke_counts_2, false, null, true));
 //console.dir(sets_sort_stroke_counts_2_pseudo, {'maxArrayLength': 10})
 //console.log(sets_sort_stroke_counts_2_pseudo);
