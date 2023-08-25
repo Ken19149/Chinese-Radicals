@@ -420,13 +420,13 @@ function radicalWeightOptimization(candidate, radicals) {
     copy_radicals = copy_radicals.concat(radicals);
     let copy_candidate = [];
     copy_candidate = copy_candidate.concat(candidate);
-    candidate = candidate.map(o => [[o[0][0],o[0][1],[Number(String(o[0][2]).replace(/NaN/g,0)),Number(String(o[0][2]).replace(/NaN/g,0))]],o[1]]);
+    copy_candidate = copy_candidate.map(o => [[o[0][0],o[0][1],[Number(String(o[0][2]).replace(/NaN/g,0)),Number(String(o[0][2]).replace(/NaN/g,0))]],o[1]]);
 
     let x = Math.max(...String(copy_candidate.map(o => o[0][2])).replace(/NaN/g,0).split(",").map(Number));  //map by rad_count and return the highest one 
     let abc = 0;
     while (x > 0) {  //check if radical exist
         //select
-        let i = String(copy_candidate.map(o => returnWeight(o,candidate))).replace(/NaN/g,0).split(",").map(Number).indexOf(Math.max(...String(copy_candidate.map(o => returnWeight(o,candidate))).replace(/NaN/g,0).split(",").map(Number)));  //index of the best candidate
+        let i = String(copy_candidate.map(o => o[0][2][0]/o[0][2][1])).replace(/NaN/g,0).split(",").map(Number).indexOf(Math.max(...String(copy_candidate.map(o => o[0][2][0]/o[0][2][1])).replace(/NaN/g,0).split(",").map(Number)));  //index of the best candidate
         console.log("i="+i,"weight="+returnWeight(copy_candidate[i],candidate),candidate[i]);
         //console.log("HERE: " + "i=" + i + [].concat(candidate[i]));
         //console.log(candidate[i]);
