@@ -427,7 +427,7 @@ function radicalWeightOptimization(candidate, radicals) {
     while (x > 0) {  //check if radical exist
         //select
         let i = String(copy_candidate.map(o => o[0][2][0]/o[0][2][1])).replace(/NaN/g,0).split(",").map(Number).indexOf(Math.max(...String(copy_candidate.map(o => o[0][2][0]/o[0][2][1])).replace(/NaN/g,0).split(",").map(Number)));  //index of the best candidate
-        console.log("i="+i,"weight="+returnWeight(copy_candidate[i],candidate),candidate[i]);
+        console.log("i="+i,"weight="+copy_candidate[i][0][2][0]/copy_candidate[i][0][2][1],copy_candidate[i],candidate[i]);
         //console.log("HERE: " + "i=" + i + [].concat(candidate[i]));
         //console.log(candidate[i]);
         final_set[0] = final_set[0].concat(candidate[i][0][0]);
@@ -448,8 +448,9 @@ function radicalWeightOptimization(candidate, radicals) {
         }
 
         copy_radicals = copy_radicals.filter(function(noZero) {return noZero !== 0;});  //remove all zero value from radicals
-        copy_candidate.splice(i, 0)     //remove the selected character
+        copy_candidate[i][0][2][0] = 0;     //set the radical count to 0
         //console.log(candidate[2]);
+
         //assign updated radical data
         for (let i in copy_candidate) {
             let temp_matching_rad = [];
@@ -464,11 +465,11 @@ function radicalWeightOptimization(candidate, radicals) {
                 }
             }
             copy_candidate[i][1] = temp_matching_rad;   //update matching radicals
-            copy_candidate[i][0][2] = temp_matching_rad.length; //update matching radical count
+            copy_candidate[i][0][2][0] = temp_matching_rad.length; //update matching radical count
             //console.log(copy_candidate[i][0][0], copy_candidate[i][1]);
         }
         
-        x = Math.max(...String(copy_candidate.map(o => o[0][2])).replace(/NaN/g,0).split(",").map(Number));  //set the new highest radical count
+        x = Math.max(...String(copy_candidate.map(o => o[0][2][0])).replace(/NaN/g,0).split(",").map(Number));  //set the new highest radical count
         abc += 1;
         //console.log("abc="+abc, "i=" + i, candidate[i])
         if (abc == 1000) {
@@ -529,6 +530,8 @@ for (let i = 0; i < sets_count; i++) {
 */
 
 //console.dir(candidate_pool[0], {'maxArrayLength': 20})
+radicalWeightOptimization(candidate_pool[0], radicals);
+console.log(radicalCountOptimization(candidate_pool[0], radicals));
 //loop function
 for (let i = 0; i < 5; i++) {
     //console.log(radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2]);
@@ -540,6 +543,7 @@ for (let i = 0; i < 5; i++) {
 for (let i in candidate_pool[0]) {
     //console.log(candidate_pool[0][i]);
 }
+
 /*
 console.log(candidate_pool[0]);
 radicalWeightOptimization(candidate_pool[0], radicals);
