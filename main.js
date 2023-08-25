@@ -426,10 +426,9 @@ function radicalWeightOptimization(candidate, radicals) {
     let abc = 0;
     while (x > 0) {  //check if radical exist
         //select
-        let i = String(copy_candidate.map(o => o[0][2][0]/o[0][2][1])).replace(/NaN/g,0).split(",").map(Number).indexOf(Math.max(...String(copy_candidate.map(o => o[0][2][0]/o[0][2][1])).replace(/NaN/g,0).split(",").map(Number)));  //index of the best candidate
+        let i = String(copy_candidate.map(o => {return (o[0][2][0]/o[0][2][1]) > 1 ? 1 : (o[0][2][0]/o[0][2][1])})).replace(/NaN/g,0).split(",").map(Number).indexOf(Math.max(...String(copy_candidate.map(o => {return (o[0][2][0]/o[0][2][1]) > 1 ? 1 : (o[0][2][0]/o[0][2][1])})).replace(/NaN/g,0).split(",").map(Number)));    //index of the best candidate
         console.log("i="+i,"weight="+copy_candidate[i][0][2][0]/copy_candidate[i][0][2][1],copy_candidate[i],candidate[i]);
-        //console.log("HERE: " + "i=" + i + [].concat(candidate[i]));
-        //console.log(candidate[i]);
+
         final_set[0] = final_set[0].concat(candidate[i][0][0]);
         final_set[1] += candidate[i][0][1];     //add stroke to total stroke
         final_set[3] = final_set[3].concat([candidate[i]]);   //add character's data
@@ -530,7 +529,6 @@ for (let i = 0; i < sets_count; i++) {
 */
 
 //console.dir(candidate_pool[0], {'maxArrayLength': 20})
-radicalWeightOptimization(candidate_pool[0], radicals);
 console.log(radicalCountOptimization(candidate_pool[0], radicals));
 //loop function
 for (let i = 0; i < 5; i++) {
