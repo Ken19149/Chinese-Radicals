@@ -500,7 +500,7 @@ function returnTextFormat(inputData, outputData) {  //  input=candidate  output=
         data = data + JSON.stringify(i) + '\n';
     }
 
-    
+    final_text = "Input - " + input_count + "\n\n" + input + "\n\n\nOutput - " + output_count + "\n\n" + output + "\n\n\nMissing Radicals - " + missing_radicals_count + "\n\n" + missing_radicals + "\n\nTotal Stroke - " + total_stroke + "\n\n\n[[\"character\", stroke_count, radical_count],[radicals]]\n\n" + data;
 
     console.log(final_text);
     return final_text;
