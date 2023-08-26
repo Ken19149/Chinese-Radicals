@@ -482,6 +482,7 @@ function radicalWeightOptimization(candidate, radicals) {
     return final_set;
 }
 
+// return output from the function into readable text format 
 function returnTextFormat(inputData, outputData) {  //  input=candidate  output=result
     let final_text = "";
 
@@ -502,38 +503,19 @@ function returnTextFormat(inputData, outputData) {  //  input=candidate  output=
 
     final_text = "Input - " + input_count + "\n\n" + input + "\n\n\nOutput - " + output_count + "\n\n" + output + "\n\n\nMissing Radicals - " + missing_radicals_count + "\n\n" + missing_radicals + "\n\nTotal Stroke - " + total_stroke + "\n\n\n[[\"character\", stroke_count, radical_count],[radicals]]\n\n" + data;
 
-    console.log(final_text);
     return final_text;
 }
 
-returnTextFormat(candidate_pool[0], radicalWeightOptimization(candidate_pool[0], radicals));
-//write output data into files
-/*
+// save data into text files seperated by folder
 for (let i = 0; i < sets_count; i++) {
-    let name = "output\\" + (i+1) * interval_length + ".txt";
-    let input = "";
-    for (let j in candidate_pool[i]) {
-        input = input.concat(candidate_pool[i][j][0][0]);
-    }
+    let file_name = "output\\count_optimization\\" + (i+1) * interval_length + ".txt";
+    let data = returnTextFormat(candidate_pool[i], radicalCountOptimization(candidate_pool[i], radicals));
+    fs.writeFileSync(file_name,data);
 
-    let output = findOptimizedSet(candidate_pool[i], radicals);
-    let output_set = "";
-    for (let k in output[0]) {
-        output_set = output_set.concat(output[0][k]);
-    }
-    let output_stroke_count = output[1];
-    let output_missing_radicals = "";
-    for (let l in output[0]) {
-        output_missing_radicals = output_missing_radicals.concat(output[2][l]);
-    }
-    output_missing_radicals = output_missing_radicals.replace(/undefined/g, "");
-    output_missing_radicals = output_missing_radicals.replace(/,/g, "");
-
-    let data = "Input - " + input.length + "\n\n" + input + "\n\n\nOutput - " + output_set.length + "\n\n" + output_set + "\n\n\nMissing Radicals - " + output_missing_radicals.length +"\n\n" + output_missing_radicals + "\n\nTotal Stroke - " + output_stroke_count;
-    fs.writeFileSync(name, data);
-
+    file_name = "output\\weight_optimization\\" + (i+1) * interval_length + ".txt";
+    data = returnTextFormat(candidate_pool[0], radicalWeightOptimization(candidate_pool[0], radicals));
+    fs.writeFileSync(file_name,data);
 }
-*/
 
 //loop function
 for (let i = 0; i < 5; i++) {
