@@ -482,11 +482,31 @@ function radicalWeightOptimization(candidate, radicals) {
     return final_set;
 }
 
-function returnTextFormat(outputData) {
+function returnTextFormat(inputData, outputData) {  //  input=candidate  output=result
     let final_text = "";
+
+    let input = String(inputData.map(o => o[0][0])).replace(/,/g,"");
+    let input_count = input.length;
+
+    let output = String(outputData[0]).replace(/,/g,"");
+    let output_count = output.length;
+    let missing_radicals = outputData[2];
+    let missing_radicals_count = missing_radicals.length;
+    let total_stroke = outputData[1]
+
+    let data_arr = outputData[3];
+    let data = "";
+    for (let i of data_arr) {
+        data = data + JSON.stringify(i) + '\n';
+    }
+
+    
+
+    console.log(final_text);
     return final_text;
 }
 
+returnTextFormat(candidate_pool[0], radicalWeightOptimization(candidate_pool[0], radicals));
 //write output data into files
 /*
 for (let i = 0; i < sets_count; i++) {
@@ -517,9 +537,9 @@ for (let i = 0; i < sets_count; i++) {
 
 //loop function
 for (let i = 0; i < 5; i++) {
-    console.log("count  optimization " + String(i+1) + "k: " + radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2]);
-    console.log("weight optimization " + String(i+1) + "k: " + radicalWeightOptimization(candidate_pool[i], radicals)[0].length,radicalWeightOptimization(candidate_pool[i], radicals)[1],radicalWeightOptimization(candidate_pool[i], radicals)[2]);
-    console.log("\n");
+    //console.log("count  optimization " + String(i+1) + "k: " + radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2]);
+    //console.log("weight optimization " + String(i+1) + "k: " + radicalWeightOptimization(candidate_pool[i], radicals)[0].length,radicalWeightOptimization(candidate_pool[i], radicals)[1],radicalWeightOptimization(candidate_pool[i], radicals)[2]);
+    //console.log("\n");
 }
 
 /*
