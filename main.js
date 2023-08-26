@@ -205,6 +205,20 @@ function returnExclude(sample, set, returnArray=true) {
     }
 }
 
+//deep copy so it doesn't affect the original -- from ChatGPT
+function deepCopyArray(arr) {
+    if (!Array.isArray(arr)) {
+      return arr; // If not an array, return the item itself
+    }
+  
+    const copy = [];
+    for (let i = 0; i < arr.length; i++) {
+      copy[i] = deepCopyArray(arr[i]); // Recursively copy nested arrays
+    }
+  
+    return copy;
+  }
+
 //----------------------------show data---------------------------
 /** 
 //show all the components for each sets
@@ -325,6 +339,7 @@ function findOptimizedSet(candidate, radicals) {
 */
 
 //optimization functon using radical count sorting algorithm
+
 function radicalCountOptimization(candidate, radicals) {
     let final_set = [[], 0, [], []];    // [[set], total stroke, "missing radicals", [character, stroke, radical_count, [radicals]]]
     let missing_radicals = "";          // copy_radicals after removed all the matched radicals
@@ -332,8 +347,7 @@ function radicalCountOptimization(candidate, radicals) {
     //make a copy
     let copy_radicals = [];
     copy_radicals = copy_radicals.concat(radicals);
-    let copy_candidate = [];
-    copy_candidate = copy_candidate.concat(candidate);
+    let copy_candidate = deepCopyArray(candidate);
 
     while (copy_candidate[0][0][2] != 0) {  //check if the 1st character's radical count = 0
         //select 1st character
@@ -345,7 +359,7 @@ function radicalCountOptimization(candidate, radicals) {
                 break;
             }
         }
-
+        
         //remove radicals
         for (let i in copy_candidate[0][1]){
             for (let j in copy_radicals){
@@ -383,7 +397,6 @@ function radicalCountOptimization(candidate, radicals) {
             copy_candidate[i].sort(function(a,b) {return a[0][1] - b[0][1]});  //sort by stroke count
         }
         copy_candidate = breakArray(copy_candidate);
-        
     }
 
     //add missing radicals to final set
@@ -394,11 +407,8 @@ function radicalCountOptimization(candidate, radicals) {
     }
     final_set[2] = missing_radicals;
 
-    //console.log(final_set);
     return final_set;
 }
-
-//console.log(candidate_pool[0]);
 
 //optimization function using weight sorting algorithm
 
@@ -505,12 +515,11 @@ for (let i = 0; i < sets_count; i++) {
 }
 */
 
-console.log(radicalWeightOptimization(candidate_pool[0], radicals));
-console.log(radicalCountOptimization(candidate_pool[0], radicals));
 //loop function
 for (let i = 0; i < 5; i++) {
-    //console.log(radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2]);
-    //console.log(radicalWeightOptimization(candidate_pool[i], radicals)[0].length,radicalWeightOptimization(candidate_pool[i], radicals)[1],radicalWeightOptimization(candidate_pool[i], radicals)[2]);    
+    console.log("count  optimization " + String(i+1) + "k: " + radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2]);
+    console.log("weight optimization " + String(i+1) + "k: " + radicalWeightOptimization(candidate_pool[i], radicals)[0].length,radicalWeightOptimization(candidate_pool[i], radicals)[1],radicalWeightOptimization(candidate_pool[i], radicals)[2]);
+    console.log("\n");
 }
 
 /*
