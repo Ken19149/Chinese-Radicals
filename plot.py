@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import json
 
 data = [[], []]  # [[count],[weight]]
 
@@ -10,6 +11,17 @@ data = [[], []]  # [[count],[weight]]
 # [[[in_count, in_str], [out_count, out_str], total_stroke, [missing_rad_count, missing_rad_str]], [[char1],..,[charN]]]
 # char = [["character", stroke_count, radical_count],[radicals]]
 
-def read_data():
-    data = []
+def read_data(path):
+    file = open(path, "r", encoding="utf-8").read().split("\n")
+    data = [[[int(file[2].replace("Input - ", "")), file[4][0:5]], [int(file[7].replace("Output - ", "")), file[9][0:5]], int(file[16].replace("Total Stroke - ", "")), [int(file[12].replace("Missing Radicals - ", "")), file[14][0:5]]], []]
+
+    #load each character's data
+    for i in range(21, len(file) - 1):
+        print(i)
+        data[1].append(json.loads(file[i]))
+
+    print(data)
     return data
+
+path = "output/count_optimization/1000.txt"
+read_data(path)
