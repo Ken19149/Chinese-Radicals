@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 import os
+import math
 
 data = []  # [[count],[weight]]
 
@@ -26,9 +27,23 @@ def read_data(path):
 
 output_dir = "output"
 
+# append data into a single array
 for i in range(0, len(os.listdir(output_dir))):
     data.append([])
     for j in range(0, len(os.listdir(output_dir + "/" + os.listdir(output_dir)[i]))):
         path = (output_dir + "/" + str(os.listdir(output_dir)[i]) + "/" + str(os.listdir(output_dir + "/" + os.listdir(output_dir)[i])[j]))
         data[i].append(read_data(path))
-print(data[0][0][0])
+
+# plot data
+
+# input vs output
+plt.plot(list(map(lambda x:str(x[0][0][0]), data[0])), list(map(lambda x:x[0][1][0], data[0])), color="#ff0000") # data[0] = count opt
+plt.plot(list(map(lambda x:str(x[0][0][0]), data[1])), list(map(lambda x:x[0][1][0], data[1])), color="#0000ff") # data[1] = weight opt
+plt.yticks(range(round((math.floor(min(list(map(lambda x: x[0][1][0], data[0]))) - min(list(map(lambda x: x[0][1][0], data[0]))) * 0.1))/10)*10, round((math.ceil(max(list(map(lambda x: x[0][1][0], data[0]))) + max(list(map(lambda x: x[0][1][0], data[0]))) * 0.1))/10)*10+1, 2))
+plt.title("Input vs Output")
+plt.legend(["Count", "Weight"])
+plt.xlabel("Input Set")
+plt.ylabel("Output Character Count")
+
+plt.savefig("graphs/input_output.png")
+plt.show()
