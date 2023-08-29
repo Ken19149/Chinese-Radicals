@@ -24,7 +24,11 @@ def read_data(path):
 
     return data
 
-path = "output/count_optimization/1000.txt"
-read_data(path)
+output_dir = "output"
 
-print(os.listdir("output"))
+for i in range(0, len(os.listdir(output_dir))):
+    data.append([])
+    for j in range(0, len(os.listdir(output_dir + "/" + os.listdir(output_dir)[i]))):
+        path = (output_dir + "/" + str(os.listdir(output_dir)[i]) + "/" + str(os.listdir(output_dir + "/" + os.listdir(output_dir)[i])[j]))
+        data[i].append(read_data(path))
+print(data[0][0][0])
