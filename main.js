@@ -513,7 +513,7 @@ for (let i = 0; i < sets_count; i++) {
     fs.writeFileSync(file_name,data);
 
     file_name = "output\\weight_optimization\\" + (i+1) * interval_length + ".txt";
-    data = "WeightOptimization Function\n\n" + returnTextFormat(candidate_pool[0], radicalWeightOptimization(candidate_pool[0], radicals));
+    data = "WeightOptimization Function\n\n" + returnTextFormat(candidate_pool[i], radicalWeightOptimization(candidate_pool[i], radicals));
     fs.writeFileSync(file_name,data);
 }
 
