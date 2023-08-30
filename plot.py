@@ -35,8 +35,11 @@ for i in range(0, len(os.listdir(output_dir))):
         data[i].append(read_data(path))
 
 # plot data
-
+'''
 # input vs output
+print("count opt count:  " + str(list(map(lambda x:x[0][1][0], data[0])))) # data[0] = count opt
+print("weight opt count: " + str(list(map(lambda x:x[0][1][0], data[1]))) + "\n") # data[1] = weight opt
+
 plt.plot(list(map(lambda x:str(x[0][0][0]), data[0])), list(map(lambda x:x[0][1][0], data[0])), color="#ff0000") # data[0] = count opt
 plt.plot(list(map(lambda x:str(x[0][0][0]), data[1])), list(map(lambda x:x[0][1][0], data[1])), color="#0000ff") # data[1] = weight opt
 plt.yticks(range(round((math.floor(min(list(map(lambda x: x[0][1][0], data[0]))) - min(list(map(lambda x: x[0][1][0], data[0]))) * 0.1))/10)*10, round((math.ceil(max(list(map(lambda x: x[0][1][0], data[0]))) + max(list(map(lambda x: x[0][1][0], data[0]))) * 0.1))/10)*10+1, 2))
@@ -47,3 +50,20 @@ plt.ylabel("Output Character Count")
 
 plt.savefig("graphs/input_output.png")
 plt.show()
+'''
+
+# input vs stroke
+print("count opt stroke:  " + str(list(map(lambda x:x[0][2], data[0])))) # data[0] = count opt
+print("weight opt stroke: " + str(list(map(lambda x:x[0][2], data[1]))) + "\n") # data[1] = weight opt
+
+plt.plot(list(map(lambda x:str(x[0][0][0]), data[0])), list(map(lambda x:x[0][2], data[0])), color="#ff0000") # data[0] = count opt
+plt.plot(list(map(lambda x:str(x[0][0][0]), data[1])), list(map(lambda x:x[0][2], data[1])), color="#0000ff") # data[1] = weight opt
+plt.yticks(range(1000, 1401, 50))
+plt.title("Input vs Stroke")
+plt.legend(["Count", "Stroke"])
+plt.xlabel("Input Set")
+plt.ylabel("Total Stroke Count")
+
+plt.savefig("graphs/input_stroke.png")
+plt.show()
+
