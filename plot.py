@@ -89,7 +89,7 @@ plt.savefig("graphs/input_missing_radicals.png")
 plt.show()
 '''
 
-# histogram frequency count
+# plot frequency count
 '''
 # radicals count frequency
 for i in range(0, len(data[0])):
@@ -105,3 +105,28 @@ plt.savefig("graphs/radicals_count_frequency.png")
 
 plt.show()
 '''
+
+# *** ask mormor how to show this graph
+# stroke count frequency
+'''
+for i in range(0, len(data[0])):
+    # plt.hist(list(map(lambda x:x[0][1], data[0][i][1])), histtype="step", bins=35, color="#ff0000")
+    # plt.hist(list(map(lambda x: x[0][1], data[1][i][1])), histtype="step", bins=35, color="#0000ff")
+    plt.plot(list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[0][i][1]))).items()))))[0], list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[0][i][1]))).items()))))[1], color="#ff000088") # red data[0][0][i] = count opt  ik
+    plt.plot(list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[1][i][1]))).items()))))[0], list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[1][i][1]))).items()))))[1], color="#0000ff88") # blue data[1][0][i] = weight opt ik
+    # break
+# plt.hist(list(map(lambda x: x[0][1], data[0][0][1])), histtype="step", bins=35, color="#ff0000")
+# plt.hist(list(map(lambda x: x[0][1], data[1][i][1])), histtype="step", bins=35, color="#0000ff")
+# plt.plot(list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[0][4][1]))).items()))))[0], list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[0][4][1]))).items()))))[1], color="#ff000088")
+# plt.plot(list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[1][4][1]))).items()))))[0], list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][1], data[1][4][1]))).items()))))[1], color="#0000ff88")
+plt.title("Stroke Count Frequency")
+plt.legend(["Count Optimization", "Weight Optimization"])
+plt.xlabel("Stroke Count")
+plt.ylabel("Frequency")
+# plt.xticks(range(1, 31, 5))
+# plt.yticks(range(1, 15, 3))
+# plt.savefig("graphs/stroke_count_frequency.png")
+
+plt.show()
+'''
+
