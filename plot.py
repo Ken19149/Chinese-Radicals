@@ -53,6 +53,7 @@ plt.show()
 '''
 
 # input vs stroke
+'''
 print("count opt stroke:  " + str(list(map(lambda x:x[0][2], data[0])))) # data[0] = count opt
 print("weight opt stroke: " + str(list(map(lambda x:x[0][2], data[1]))) + "\n") # data[1] = weight opt
 
@@ -60,10 +61,27 @@ plt.plot(list(map(lambda x:str(x[0][0][0]), data[0])), list(map(lambda x:x[0][2]
 plt.plot(list(map(lambda x:str(x[0][0][0]), data[1])), list(map(lambda x:x[0][2], data[1])), color="#0000ff") # data[1] = weight opt
 plt.yticks(range(1000, 1401, 50))
 plt.title("Input vs Stroke")
-plt.legend(["Count", "Stroke"])
+plt.legend(["Count Optimization", "Weight Optimization"])
 plt.xlabel("Input Set")
 plt.ylabel("Total Stroke Count")
 
 plt.savefig("graphs/input_stroke.png")
 plt.show()
+'''
 
+# input vs missing radicals
+'''
+print("count opt missing rad:  " + str(list(map(lambda x:x[0][3][0], data[0])))) # data[0] = count opt
+print("weight opt missing rad: " + str(list(map(lambda x:x[0][3][0], data[1]))) + "\n") # data[1] = weight opt
+
+plt.plot(list(map(lambda x:str(x[0][0][0]), data[0])), list(map(lambda x:x[0][3][0], data[0])), color="#ff000088") # data[0] = count opt
+plt.plot(list(map(lambda x:str(x[0][0][0]), data[1])), list(map(lambda x:x[0][3][0], data[1])), color="#0000ff88") # data[1] = weight opt
+plt.yticks(range(0, 50, 10))
+plt.title("Input vs Missing Radicals")
+plt.legend(["Count Optimization", "Stroke Optimization"])
+plt.xlabel("Input Set")
+plt.ylabel("Missing Radicals Count")
+
+plt.savefig("graphs/input_missing_radicals.png")
+plt.show()
+'''
