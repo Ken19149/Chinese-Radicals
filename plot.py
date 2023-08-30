@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import os
 import math
+from collections import Counter
 
 data = []  # [[count],[weight]]
 
@@ -35,6 +36,8 @@ for i in range(0, len(os.listdir(output_dir))):
         data[i].append(read_data(path))
 
 # plot data
+
+# compare input
 '''
 # input vs output
 print("count opt count:  " + str(list(map(lambda x:x[0][1][0], data[0])))) # data[0] = count opt
@@ -78,10 +81,27 @@ plt.plot(list(map(lambda x:str(x[0][0][0]), data[0])), list(map(lambda x:x[0][3]
 plt.plot(list(map(lambda x:str(x[0][0][0]), data[1])), list(map(lambda x:x[0][3][0], data[1])), color="#0000ff88") # data[1] = weight opt
 plt.yticks(range(0, 50, 10))
 plt.title("Input vs Missing Radicals")
-plt.legend(["Count Optimization", "Stroke Optimization"])
+plt.legend(["Count Optimization", "Weight Optimization"])
 plt.xlabel("Input Set")
 plt.ylabel("Missing Radicals Count")
 
 plt.savefig("graphs/input_missing_radicals.png")
+plt.show()
+'''
+
+# histogram frequency count
+'''
+# radicals count frequency
+for i in range(0, len(data[0])):
+    plt.plot(list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][2], data[0][i][1]))).items()))))[0], list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][2], data[0][i][1]))).items()))))[1], color="#ff000088") # red data[0][0][i] = count opt  ik
+    plt.plot(list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][2], data[1][i][1]))).items()))))[0], list(map(list, zip(*sorted(Counter(list(map(lambda x:x[0][2], data[1][i][1]))).items()))))[1], color="#0000ff88") # blue data[1][0][i] = weight opt ik
+plt.title("Radicals Count Frequency")
+plt.legend(["Count Optimization", "Weight Optimization"])
+plt.xlabel("Radicals Count")
+plt.ylabel("Frequency")
+plt.xticks(range(1, 11, 1))
+plt.yticks(range(0, 61, 5))
+plt.savefig("graphs/radicals_count_frequency.png")
+
 plt.show()
 '''
