@@ -507,6 +507,7 @@ function returnTextFormat(inputData, outputData) {  //  input=candidate  output=
 }
 
 // save data into text files seperated by folder
+/*
 for (let i = 0; i < sets_count; i++) {
     let file_name = "output\\count_optimization\\" + (i+1) * interval_length + ".txt";
     let data = "CountOptimization Function\n\n" + returnTextFormat(candidate_pool[i], radicalCountOptimization(candidate_pool[i], radicals));
@@ -516,11 +517,12 @@ for (let i = 0; i < sets_count; i++) {
     data = "WeightOptimization Function\n\n" + returnTextFormat(candidate_pool[i], radicalWeightOptimization(candidate_pool[i], radicals));
     fs.writeFileSync(file_name,data);
 }
+*/
 
 //loop function
 for (let i = 0; i < 5; i++) {
-    console.log("count  optimization " + String(i+1) + "k: " + radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2]);
-    console.log("weight optimization " + String(i+1) + "k: " + radicalWeightOptimization(candidate_pool[i], radicals)[0].length,radicalWeightOptimization(candidate_pool[i], radicals)[1],radicalWeightOptimization(candidate_pool[i], radicals)[2]);
+    console.log("count  optimization " + String(i+1) + "k: " + radicalCountOptimization(candidate_pool[i], radicals)[0].length,radicalCountOptimization(candidate_pool[i], radicals)[1],radicalCountOptimization(candidate_pool[i], radicals)[2].length,radicalCountOptimization(candidate_pool[i], radicals)[2]);
+    console.log("weight optimization " + String(i+1) + "k: " + radicalWeightOptimization(candidate_pool[i], radicals)[0].length,radicalWeightOptimization(candidate_pool[i], radicals)[1],radicalWeightOptimization(candidate_pool[i], radicals)[2].length,radicalWeightOptimization(candidate_pool[i], radicals)[2]);
     console.log("\n");
 }
 
