@@ -130,3 +130,15 @@ plt.ylabel("Frequency")
 plt.show()
 '''
 
+# radicals count vs stroke count
+'''
+for i in range(0, len(data[0])):
+    plt.scatter(list(map(lambda x: x[0][2], data[0][i][1])), list(map(lambda x: x[0][1], data[0][i][1])), color="#ff000022")
+    plt.scatter(list(map(lambda x: x[0][2], data[1][i][1])), list(map(lambda x: x[0][1], data[1][i][1])), color="#0000ff22")
+plt.title("Radicals vs Stroke Count")
+plt.xlabel("Radicals Count")
+plt.ylabel("Stroke Count")
+plt.legend(["Count Optimization", "Weight Optimization"])
+plt.savefig("graphs/radicals_stroke_count.png")
+plt.show()
+'''
